@@ -1,21 +1,40 @@
 import { useEffect, useState } from 'react';
 import { request } from 'umi';
 import styles from './list.less';
+
+// 性别
+enum Gender {
+  男 = 1,
+  女 = 2,
+}
+// 在职状态
+enum Status {
+  on = 1,
+  leaving = 2,
+  off = 3,
+}
 interface User {
+  id: number;
   username: string;
   email: string;
   birthday: string;
-  gender: string;
-  status: string;
+  gender: Gender;
+  status: Status;
   remark: string;
 }
+
 export default () => {
   const [user, setUser] = useState<User[]>([]);
   const handleRequest = () => {
-    console.log('点击了');
     request('http://localhost:3011/formily/getFormilyUser').then((res) => {
-      setUser(res.data);
+      if (res.code === 200) {
+        setUser(res.data);
+      }
     });
+  };
+
+  const enumHandle = () => {
+    console.log(Gender.男);
   };
 
   useEffect(() => {
@@ -39,7 +58,7 @@ export default () => {
         <tbody>
           {user.map((user) => {
             return (
-              <tr>
+              <tr key={user.id}>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
                 <td>{user.gender}</td>
@@ -51,7 +70,7 @@ export default () => {
           })}
         </tbody>
       </table>
-      <button onClick={handleRequest}>请求</button>
+      <button onClick={enumHandle}>请求</button>
     </>
   );
 };
