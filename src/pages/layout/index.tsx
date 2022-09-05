@@ -14,6 +14,9 @@ export default (props: any) => {
         <li>
           <Link to="/detail">详情页</Link>
         </li>
+        <li>
+          <Link to="/formily">formily</Link>
+        </li>
       </ul>
       {props.children}
     </>

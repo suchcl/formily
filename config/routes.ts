@@ -18,6 +18,11 @@ const routes = [
         component: '@/pages/detail/detail',
         title: '详情页',
       },
+      {
+        path: '/formily',
+        component: '@/pages/formily/index',
+        title: '测试formily',
+      },
     ],
   },
 ];
