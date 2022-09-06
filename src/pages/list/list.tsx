@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { request } from 'umi';
+import { Button, Input, Select, Form } from 'antd';
+const { Option } = Select;
 import styles from './list.less';
 
 // 性别
@@ -22,9 +24,26 @@ interface User {
   status: Status;
   remark: string;
 }
+interface ISex {
+  key: number;
+  value: string;
+}
+
+const sex: ISex[] = [
+  {
+    key: 1,
+    value: '男',
+  },
+  {
+    key: 2,
+    value: '女',
+  },
+];
 
 export default () => {
+  const [form] = Form.useForm();
   const [user, setUser] = useState<User[]>([]);
+  const [gender, setGender] = useState<Gender[]>([Gender.男, Gender.女]);
   const handleRequest = () => {
     request('http://localhost:3011/formily/getFormilyUser').then((res) => {
       if (res.code === 200) {
@@ -41,9 +60,42 @@ export default () => {
     handleRequest();
   }, []);
 
+  const onFinish = (values: any) => {
+    console.log('表单values:', values);
+  };
+
+  const onGenderChange = () => {};
+
   return (
     <>
       <h3>列表页</h3>
+      <div className={styles.search_area}>
+        <Form form={form} onFinish={onFinish}>
+          <Form.Item name="note" label="Note">
+            <Input />
+          </Form.Item>
+          <Form.Item name="gender" label="Gender">
+            <Select onChange={onGenderChange} allowClear>
+              {sex.map((item) => {
+                return (
+                  <Option value={item.key} key={item.key}>
+                    {item.value}
+                  </Option>
+                );
+              })}
+            </Select>
+          </Form.Item>
+          <Form.Item name="email" label="邮箱">
+            <Input />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              查询
+            </Button>
+            <Button>重置</Button>
+          </Form.Item>
+        </Form>
+      </div>
       <table className={styles.table}>
         <thead>
           <tr>
