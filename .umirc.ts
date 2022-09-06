@@ -9,5 +9,6 @@ export default defineConfig({
   //   { path: '/', component: '@/pages/index' },
   // ],
   routes,
+  MFSU: {},
   fastRefresh: {},
 });

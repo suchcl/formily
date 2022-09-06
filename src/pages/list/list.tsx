@@ -3,6 +3,7 @@ import { request } from 'umi';
 import { Button, Input, Select, Form } from 'antd';
 const { Option } = Select;
 import styles from './list.less';
+import { Pie } from '@ant-design/charts';
 
 // 性别
 enum Gender {
@@ -66,6 +67,77 @@ export default () => {
 
   const onGenderChange = () => {};
 
+  const data = [
+    {
+      type: '分类一',
+      value: 27,
+    },
+    {
+      type: '分类二',
+      value: 25,
+    },
+  ];
+  const dataHtml = `<div style="font-size: 14px;">
+        <h4 style="font-weight: normal;font-size: 16px;color: #f20;">总客增</h4>
+        <span style="color:#395;">134</span>
+        <div>同比上涨12%</div>
+        <div>环比下降10%</div>
+    </div>`;
+  const config = {
+    appendPadding: 10,
+    data,
+    angleField: 'value',
+    colorField: 'type',
+    radius: 1,
+    innerRadius: 0.6,
+    label: {
+      type: 'inner',
+      offset: '-50%',
+      content: '{value}',
+      style: {
+        textAlign: 'center',
+        fontSize: 14,
+      },
+    },
+    // interactions: [
+    //     {
+    //         type: 'element-selected',
+    //     },
+    //     {
+    //         type: 'element-active',
+    //     },
+    // ],
+    pieStyle: {
+      lineWidth: 2,
+      // fill: 'red',
+      // stroke: 'black',
+      shadowOffsetX: 4,
+      shadowOffsetY: 5,
+      shadowColor: 'blue',
+    },
+    statistic: {
+      title: {
+        style: {
+          marginTop: '30px',
+        },
+        // content: "哈哈哈哈",
+        customHtml: () => {
+          return dataHtml;
+        },
+      },
+      content: {
+        style: {
+          fontSize: '14px',
+          whiteSpace: 'pre-wrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        },
+        // content，隐藏默认展示的总数
+        content: '',
+      },
+    },
+  };
+
   return (
     <>
       <h3>列表页</h3>
@@ -123,6 +195,23 @@ export default () => {
         </tbody>
       </table>
       <button onClick={enumHandle}>请求</button>
+      <div className={styles.pie_wrapper}>
+        <Pie {...config}></Pie>
+      </div>
+      <div className={styles.other}>
+        <div className={styles.item}>
+          <h4>人均客增(人/日)</h4>
+          <p>1.5</p>
+        </div>
+        <div className={styles.item}>
+          <h4>人均存量私客(人/日)</h4>
+          <p>8</p>
+        </div>
+        <div className={styles.item}>
+          <h4>存量私客总数(人/日)</h4>
+          <p>12</p>
+        </div>
+      </div>
     </>
   );
 };
