@@ -8,7 +8,11 @@ export default defineConfig({
   // routes: [
   //   { path: '/', component: '@/pages/index' },
   // ],
+  dva: {
+    immer: true,
+    hmr: false,
+  },
   routes,
-  MFSU: {},
+  mfsu: {},
   fastRefresh: {},
 });
