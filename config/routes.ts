@@ -4,6 +4,11 @@ const routes = [
     component: '@/pages/layout/index',
     routes: [
       {
+        path: '/card',
+        component: '@/pages/card/index',
+        title: '卡片',
+      },
+      {
         path: '/home',
         component: '@/pages/home/index',
         title: '首页',
